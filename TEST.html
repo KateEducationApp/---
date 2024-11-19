@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест: Борт-земля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 40px;
+            background-color: #f3f6fc;
+            position: relative;
+        }
+
+        header img {
+            position: relative;
+            height: 120px;
+            margin: 0;
+        }
+
+        .header-title {
+            margin-left: 15px;
+        }
+
+        .header-title .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #666;
+            margin: 0;
+        }
+
+        .header-title .main-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #2E75B6;
+            margin: 0;
+        }
+
+        .question-counter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1rem;
+            font-weight: 700;
+            color: #333;
+            background-color: #fff;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .timer {
+            font-size: 1rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        #time-counter {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #2E75B6;
+            margin-left: 5px;
+        }
+
+        .quiz-container {
+            text-align: center;
+            margin: 40px auto 0 auto;
+            padding: 0 20px;
+            max-width: 700px;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column; /* Варианты ответа в столбик */
+            gap: 15px;
+        }
+
+        .answers button {
+            font-size: 1rem;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: background 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .answers button:hover {
+            background-color: #e6e6e6;
+        }
+
+        .answers button.selected {
+            background-color: #2E75B6;
+            color: #fff;
+            border-color: #2E75B6;
+            transform: scale(1.03);
+        }
+
+        .next-btn {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #2E75B6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .next-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .next-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Секция результатов */
+        .result-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .chart-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .time-info {
+            margin: 20px 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .submit-btn {
+            margin: 20px 0;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #2E75B6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .question-review {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .question-review h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .question-review p {
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .explanation {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #555;
+        }
+
+
+        .instruction-container {
+            text-align: center;
+            margin: 40px auto 0 auto;
+            padding: 0 20px;
+            max-width: 700px;
+        }
+
+
+        .timer, .question-counter {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+
+    header {
+            display: flex;
+            flex-direction: column;
+            justify-content:space-around;
+            align-items: center;
+            height: 30vh;
+            background-color: #f3f6fc;
+            position: relative;
+        }
+
+       
+
+
+        .timer {
+            font-size: 1rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0%;
+        }
+
+
+
+
+        .question-counter {
+            margin-top: 18vh;
+            white-space: nowrap;
+        }
+
+
+
+
+
+        .timer, .question-counter {
+    display: none;
+}
+    
+
+
+
+    }
+        
+    </style>
+</head>
+<body>
+    <!-- Верхняя панель -->
+    <header>
+        <div style="display: flex; align-items: center;">
+            <img src="Герб университета.png" alt="Герб университета">
+            <div class="header-title">
+                <p class="subtitle">сеть цифровой связи</p>
+                <p class="main-title">«БОРТ-ЗЕМЛЯ»</p>
+            </div>
+        </div>
+        <div class="question-counter" id="question-counter">
+            <span>Вопрос:</span> <span>1/20</span>
+        </div>
+        <div class="timer" id="timer">
+            <span>Время:</span> <span id="time-counter">20:00</span>
+        </div>
+    </header>
+
+
+
+<!-- Добавьте секцию инструкции -->
+<div class="instruction-container" id="instruction-container">
+    <h2>Добро пожаловать в тест</h2>
+    <p>
+        Этот тест посвящён изучению отечественной сети цифровой связи «Борт-Земля».<br>
+        Вы будете отвечать на вопросы, связанные с технологиями, стандартами и протоколами этой сети.
+    </p>
+    <p>
+        Тест состоит из 20 вопросов, и у вас будет <strong>20 минут</strong>, чтобы завершить его.<br>
+        Ваши результаты включат количество правильных ответов, затраченное время и анализ каждого вопроса.
+    </p>
+    <button class="next-btn" id="start-test-btn">Начать тест</button>
+</div>
+
+
+
+    
+<div class="quiz-container" id="quiz-container" style="display: none;">
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers"></div>
+    <button class="next-btn" id="next-btn" disabled>Далее</button>
+        <!-- Секция результатов -->
+        <div class="result-section" id="result-section" style="display: none;">
+            <div class="chart-container">
+                <canvas id="resultChart"></canvas>
+            </div>
+            <div class="time-info" id="time-info"></div>
+            <button class="submit-btn" id="submit-btn">Отправить результаты теста</button>
+            <div class="question-review" id="question-review"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Какой стандарт описывает интерфейс между ВСС и блоком управления радиосвязью (БУР)?",
+                options: ["ARINC 429", "ARINC 702A-3", "ARINC 619", "OSI"],
+                correct: 0,
+                explanation: "Стандарт ARINC 429 отвечает за связь между авиасистемами."
+            },
+            {
+                question: "Какой уровень модели OSI отвечает за формирование файлов данных?",
+                options: ["Сетевой", "Канальный", "Прикладной", "Физический"],
+                correct: 2,
+                explanation: "Прикладной уровень занимается формированием файлов."
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswers = [];
+        let timeSpent = 0;
+        let timeLeft = 20 * 60;
+        let timerInterval;
+
+        const questionCounterEl = document.getElementById("question-counter");
+        const timerEl = document.getElementById("timer");
+        const timeCounterEl = document.getElementById("time-counter");
+        const questionEl = document.getElementById("question");
+        const answersEl = document.getElementById("answers");
+        const nextBtn = document.getElementById("next-btn");
+        const resultSection = document.getElementById("result-section");
+        const timeInfoEl = document.getElementById("time-info");
+        const questionReviewEl = document.getElementById("question-review");
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timeCounterEl.textContent = `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+                timeLeft--;
+                timeSpent++;
+            }, 1000);
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestionIndex];
+            questionEl.textContent = question.question;
+            answersEl.innerHTML = "";
+            nextBtn.disabled = true;
+
+            question.options.forEach((option, index) => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => selectAnswer(button, index);
+                answersEl.appendChild(button);
+            });
+
+            questionCounterEl.innerHTML = `<span>Вопрос:</span> <span>${currentQuestionIndex + 1}/${questions.length}</span>`;
+            nextBtn.textContent = currentQuestionIndex === questions.length - 1 ? "Завершить тест" : "Далее";
+        }
+
+        function selectAnswer(button, index) {
+            const allButtons = answersEl.querySelectorAll("button");
+            allButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            selectedAnswers[currentQuestionIndex] = index;
+            nextBtn.disabled = false;
+        }
+
+        function handleNextQuestion() {
+            if (selectedAnswers[currentQuestionIndex] === questions[currentQuestionIndex].correct) score++;
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                clearInterval(timerInterval);
+                showResults();
+            }
+        }
+
+        function showResults() {
+            questionCounterEl.innerHTML = `<span>Результаты теста</span>`;
+            timerEl.style.display = "none";
+
+            resultSection.style.display = "block";
+            questionEl.style.display = "none";
+            answersEl.style.display = "none";
+            nextBtn.style.display = "none";
+
+            const percentage = Math.round((score / questions.length) * 100);
+            const ctx = document.getElementById("resultChart").getContext("2d");
+            new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Правильные ответы", "Ошибки"],
+                    datasets: [{
+                        data: [score, questions.length - score],
+                        backgroundColor: ["#00863D", "#B40000"], // Цвета диаграммы
+                    }],
+                },
+            });
+
+            const minutes = Math.floor(timeSpent / 60);
+            const seconds = timeSpent % 60;
+            timeInfoEl.textContent = `Затраченное время: ${minutes} мин ${seconds} сек`;
+
+            questions.forEach((question, index) => {
+                const userAnswer = selectedAnswers[index];
+                const isCorrect = userAnswer === question.correct;
+                questionReviewEl.innerHTML += `
+                    <div>
+                        <h3>${index + 1}. ${question.question}</h3>
+                        <p class="${isCorrect ? "correct" : "incorrect"}">
+                            Ваш ответ: ${userAnswer !== undefined ? question.options[userAnswer] : "Нет ответа"}
+                        </p>
+                        <p class="correct">Правильный ответ: ${question.options[question.correct]}</p>
+                        <p class="explanation">${question.explanation}</p>
+                    </div>
+                `;
+            });
+        }
+
+        nextBtn.onclick = handleNextQuestion;
+        startTimer();
+        showQuestion();
+
+        const instructionContainer = document.getElementById("instruction-container");
+const quizContainer = document.getElementById("quiz-container");
+const startTestBtn = document.getElementById("start-test-btn");
+
+startTestBtn.onclick = () => {
+    instructionContainer.style.display = "none";
+    quizContainer.style.display = "block";
+
+    // Отобразить таймер и счетчик вопросов
+    timerEl.style.display = "flex";
+    questionCounterEl.style.display = "inline-block";
+
+    startTimer();
+    showQuestion();
+};
+
+
+
+
+
+    </script>
+</body>
+</html>

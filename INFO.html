@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория: Сеть «Борт-Земля»</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 40px;
+            background-color: #f3f6fc;
+            position: relative;
+        }
+
+        header img {
+            position: relative;
+            height: 120px;
+            margin: 0;
+        }
+
+        .header-title {
+            margin-left: 15px;
+        }
+
+        .header-title .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #666;
+            margin: 0;
+        }
+
+        .header-title .main-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #2E75B6;
+            margin: 0;
+        }
+
+        .content-container {
+            text-align: left;
+            margin: 40px auto 0 auto;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+
+        .content-container h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .content-container p {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .content-container ul {
+            list-style: disc;
+            margin-left: 40px;
+        }
+
+        .content-container ul li {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #2E75B6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-bottom: 45px;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+           
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя панель -->
+    <header>
+        <div style="display: flex; align-items: center;">
+            <img src="Герб университета.png" alt="Герб университета">
+            <div class="header-title">
+                <p class="subtitle">сеть цифровой связи</p>
+                <p class="main-title">«БОРТ-ЗЕМЛЯ»</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="content-container">
+        <h2>Теория: Основы сети цифровой связи «Борт-Земля»</h2>
+
+        <p>
+            Сеть цифровой связи «Борт-Земля» — это специализированная инфраструктура, обеспечивающая 
+            обмен данными между воздушными судами и наземными станциями. Основное предназначение 
+            этой сети — передача оперативной информации для управления полётами, мониторинга 
+            технического состояния самолёта, а также для обеспечения безопасности полётов.
+        </p>
+
+        <h3>Основные характеристики сети «Борт-Земля»</h3>
+        <ul>
+            <li>Использование стандарта ARINC 429 для передачи данных внутри самолёта.</li>
+            <li>Обмен данными осуществляется на основе протоколов OSI модели (уровни физический, канальный, сетевой и прикладной).</li>
+            <li>Поддержка высокоскоростной передачи информации через радиоканалы.</li>
+            <li>Гибкость системы, позволяющая адаптироваться под требования различных авиакомпаний.</li>
+        </ul>
+
+        <h3>Модель OSI в системе «Борт-Земля»</h3>
+        <p>
+            Сеть «Борт-Земля» опирается на семиуровневую модель OSI, которая регулирует взаимодействие устройств:
+        </p>
+        <ul>
+            <li><strong>Физический уровень:</strong> обеспечивает передачу сигналов по радиочастотным каналам связи.</li>
+            <li><strong>Канальный уровень:</strong> отвечает за обеспечение надёжности передачи данных.</li>
+            <li><strong>Сетевой уровень:</strong> управляет маршрутизацией данных между узлами сети.</li>
+            <li><strong>Прикладной уровень:</strong> обеспечивает доступ пользователей к функционалу системы.</li>
+        </ul>
+
+        <h3>Преимущества цифровой сети «Борт-Земля»</h3>
+        <p>
+            Внедрение цифровых технологий в авиацию предоставляет значительные преимущества:
+        </p>
+        <ul>
+            <li>Увеличение скорости передачи данных и повышение её надёжности.</li>
+            <li>Снижение числа ошибок при передаче сообщений.</li>
+            <li>Возможность интеграции с системами автоматизированного управления полётами.</li>
+            <li>Поддержка передачи больших объёмов данных, включая мультимедийную информацию.</li>
+        </ul>
+
+        <button class="back-btn" onclick="location.href='Main.html'">Вернуться на главную</button>
+
+    </div>
+</body>
+</html>
